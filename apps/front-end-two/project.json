@@ -1,0 +1,92 @@
+{
+  "projectType": "application",
+  "sourceRoot": "apps/front-end-two/src",
+  "prefix": "angular-mono-repo-nx",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/front-end-two",
+        "index": "apps/front-end-two/src/index.html",
+        "main": "apps/front-end-two/src/main.ts",
+        "polyfills": "apps/front-end-two/src/polyfills.ts",
+        "tsConfig": "apps/front-end-two/tsconfig.app.json",
+        "assets": [
+          "apps/front-end-two/src/favicon.ico",
+          "apps/front-end-two/src/assets"
+        ],
+        "styles": ["apps/front-end-two/src/styles.css"],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "fileReplacements": [
+            {
+              "replace": "apps/front-end-two/src/environments/environment.ts",
+              "with": "apps/front-end-two/src/environments/environment.prod.ts"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "browserTarget": "front-end-two:build:production"
+        },
+        "development": {
+          "browserTarget": "front-end-two:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "front-end-two:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "apps/front-end-two/**/*.ts",
+          "apps/front-end-two/**/*.html"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/front-end-two"],
+      "options": {
+        "jestConfig": "apps/front-end-two/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["platform:front-end-two"]
+}
